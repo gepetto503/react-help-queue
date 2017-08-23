@@ -4,7 +4,10 @@ import Ticket from "./Ticket";
 function TicketList(props){
 
   return (
-    <Ticket/>
+    <div>
+      <Ticket/>
+      <h3>text from ticket list</h3>
+    </div>
   );
 }
 
