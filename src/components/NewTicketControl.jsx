@@ -20,11 +20,18 @@ class NewTicketControl extends React.Component {
 
   //what to render in reacts virtual dom
   render(){
+    let formAreaContent = null;
+    if (this.state.formVisibleOnPage) {
+      formAreaContent = <h1>Form will eventually go here!</h1>
+    } else {
+      formAreaContent = <button onClick={this.handleDisplayingNewTicketForm.bind(this)}>Request Help</button>;
+    }
     return (
-      <button onClick={this.handleDisplayingNewTicketForm}>Request Help</button>
+      <div>
+        {formAreaContent}
+      </div>
     );
   }
-
 }
 
 //only one thing is exported: the class NewTicketControl
