@@ -1,6 +1,7 @@
 //imports
 import React from "react";
 import NewTicketForm from "./NewTicketForm";
+import PropTypes from "prop-types";
 
 //establishes react component with class name
 class NewTicketControl extends React.Component {
@@ -21,14 +22,21 @@ class NewTicketControl extends React.Component {
 
   //what to render in reacts virtual dom
   render(){
+    //set a variable within the scope of this render function that is equal to the state value for formIsVisibleOnPage?
     const formIsVisibleOnPage = this.state.formIsVisibleOnPage;
+
+    //set a variable, to be displayed in the return, that starts out null
     let formAreaContent = null;
+
+    //if the local version of the state value for formIsVisibleOnPage is true, then display NewTicketForm.  pass the function onNewTicketCreationdown to NewTicketForm as a prop
     if (formIsVisibleOnPage){
-      formAreaContent = <NewTicketForm/>
-    } else {
+      formAreaContent = <NewTicketForm
+        onNewTicketCreation = {this.props.onNewTicketCreation}/>
+    }
+    //if not, display button
+    else {
        formAreaContent = <button onClick={this.handleDisplayingNewTicketForm.bind(this)}>Request Help</button>;
     }
-
     return (
       <div>
         {formAreaContent}
@@ -37,5 +45,10 @@ class NewTicketControl extends React.Component {
   }
 
 }
+
+NewTicketControl.propTypes = {
+  onNewTicketCreation: PropTypes.func
+}
+
 
 export default NewTicketControl;

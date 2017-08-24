@@ -5,8 +5,8 @@ function Ticket(props){
   return (
     <div>
       <h2>{props.names}</h2>
-      <h3>no props up in here yet</h3>
-      <p>who got da props?</p>
+      <h3>{props.location}</h3>
+      <p>{props.issue}</p>
       <hr/>
     </div>
   );
