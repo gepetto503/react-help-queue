@@ -1,54 +1,64 @@
-//imports
 import React from "react";
 import NewTicketForm from "./NewTicketForm";
 import PropTypes from "prop-types";
+import { Button }  from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
-//establishes react component with class name
 class NewTicketControl extends React.Component {
 
-  //don't know what super does
-  //establishes beginning state
   constructor(props) {
-   super(props);
-   this.state = {formIsVisibleOnPage: false};
-   this.handleDisplayingNewTicketForm = this.handleDisplayingNewTicketForm.bind(this);
+    super(props);
+    this.showFormModal = this.showFormModal.bind(this);
+    this.hideFormModal = this.hideFormModal.bind(this);
+    this.state = {
+      formModalIsShowing: false
+    };
   }
 
-  //our event handler method for when the button is clicked
-  handleDisplayingNewTicketForm(event){
-    this.setState({formIsVisibleOnPage: true});
-    console.log(this.state);
+  showFormModal(){
+    this.setState({
+      formModalIsShowing: true
+    });
+  }
+
+  hideFormModal(){
+    this.setState({
+      formModalIsShowing: false
+    });
   }
 
   //what to render in reacts virtual dom
   render(){
-    //set a variable within the scope of this render function that is equal to the state value for formIsVisibleOnPage?
-    const formIsVisibleOnPage = this.state.formIsVisibleOnPage;
-
-    //set a variable, to be displayed in the return, that starts out null
-    let formAreaContent = null;
-
-    //if the local version of the state value for formIsVisibleOnPage is true, then display NewTicketForm.  pass the function onNewTicketCreationdown to NewTicketForm as a prop
-    if (formIsVisibleOnPage){
-      formAreaContent = <NewTicketForm
-        onNewTicketCreation = {this.props.onNewTicketCreation}/>
-    }
-    //if not, display button
-    else {
-       formAreaContent = <button onClick={this.handleDisplayingNewTicketForm.bind(this)}>Request Help</button>;
-    }
     return (
       <div>
-        {formAreaContent}
+        <Button
+          bsStyle="primary"
+          bsSize="large"
+          onClick={this.showFormModal}>
+            Request Help!
+        </Button>
+        <Modal
+          show={this.state.formModalIsShowing}
+          onHide={this.hideFormModal}
+          bsSize="large">
+           <Modal.Header>
+             <Modal.Title>Request Help</Modal.Title>
+           </Modal.Header>
+           <Modal.Body>
+             <NewTicketForm
+              onNewTicketCreation={this.props.onNewTicketCreation}
+              hideFormAfterSubmission = {this.hideFormModal}/>
+           </Modal.Body>
+         </Modal>
       </div>
     );
   }
-
 }
 
 NewTicketControl.propTypes = {
-  onNewTicketCreation: PropTypes.func
-}
+  onNewTicketCreation: PropTypes.func,
+  hideFormAfterSubmission: PropTypes.func
+};
 
 
 export default NewTicketControl;
